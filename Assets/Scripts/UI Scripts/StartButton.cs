@@ -45,6 +45,9 @@ public class StartButton : MonoBehaviour
     public void StartButtonClicked()
     {
         Debug.Log("Clicked!");
+        InputField getName = getPlayerName.GetComponent<InputField>();
+        string textMessage = getName.text;
+        NameKeeper.storedUsername = textMessage;
         SceneManager.LoadScene(1);
     }
     

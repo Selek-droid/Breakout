@@ -12,6 +12,8 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
+    public string persistentUsername;  // added by me
+    public Text NameText;
     
     private bool m_Started = false;
     private int m_Points;
@@ -22,6 +24,9 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        persistentUsername = NameKeeper.storedUsername;
+        Debug.Log("Player is " + persistentUsername);   // this line and above added by me
+        NameText.text = persistentUsername + " is the player!";
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
