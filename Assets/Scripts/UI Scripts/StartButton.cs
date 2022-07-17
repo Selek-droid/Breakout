@@ -15,6 +15,7 @@ public class StartButton : MonoBehaviour
     {
         Button gameButton = gameStartButton.GetComponent<Button>();
         gameButton.onClick.AddListener(StartButtonClicked);
+        
 
         // InputField getName = getPlayerName.GetComponent<InputField>();
         // getName.onEndEdit.AddListener(delegate { Gronk(); });

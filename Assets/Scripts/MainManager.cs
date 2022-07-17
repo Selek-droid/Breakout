@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class MainManager : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class MainManager : MonoBehaviour
         persistentUsername = NameKeeper.storedUsername;
         Debug.Log("Player is " + persistentUsername);   // this line and above added by me
         NameText.text = persistentUsername + " is the player!";
+        WriteNameToDisk();
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -77,5 +79,35 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+    }
+
+    [System.Serializable]
+    public class SavedPlayerName
+    {
+        public string savedName;
+    }
+
+    public void WriteNameToDisk()
+    {
+        SavedPlayerName nameToStore = new SavedPlayerName();
+        nameToStore.savedName = persistentUsername;
+        string json = JsonUtility.ToJson(nameToStore);
+        File.WriteAllText(Application.persistentDataPath +"/savefile.json", json);
+    }
+
+    public void LoadNameFromDisk()
+    {
+        string path = Application.persistentDataPath + "/savefile.json";
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            SavedPlayerName loadedName = JsonUtility.FromJson<SavedPlayerName>(json);
+            persistentUsername = loadedName.savedName;
+            Debug.Log("Persistent name is " + persistentUsername);
+            Debug.Log("Name on disk is " + loadedName.savedName);
+
+        }
+        
+        
     }
 }
